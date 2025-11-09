@@ -1,0 +1,93 @@
+/* src/styles/Navbar.css */
+
+/* Main navbar container */
+.navbar {
+  background-color: #ffe8d6; /* soft peach */
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 3rem; /* space between links */
+  border-bottom: 2px solid #cb997e; /* warm terracotta */
+  font-family: 'Playfair Display', serif;
+}
+
+/* Remove list styling if using <ul> */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* Link styling for both top bar and sidebar */
+.nav-link,
+.navbar a {
+  color: #596e52; /* earthy green */
+  text-decoration: none;
+  font-size: 1.2rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Hover color change */
+.nav-link:hover,
+.navbar a:hover {
+  color: #cb997e;
+}
+
+/* Underline hover animation */
+.nav-link::after,
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #cb997e;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.navbar a:hover::after {
+  width: 100%;
+}
+
+/* Active link state  */
+.nav-link.active {
+  color: #cb997e;
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+/* Ensure the sidebar can have a footer pinned at the bottom */
+.navbar {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Push footer to bottom */
+.navbar-footer {
+  margin-top: auto;
+  padding: 0.75rem;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.feedback-btn {
+  width: 100%;
+  text-align: center;
+  background: #ddbea9;
+  color: #6b705c;
+  border: 2px solid #b7b7a4;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  font-family: 'Playfair Display', serif;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.feedback-btn:hover {
+  background: #ffe8d6;
+  border-color: #cb997e;
+}

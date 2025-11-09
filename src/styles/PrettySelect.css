@@ -1,0 +1,126 @@
+.psel { position: relative; display: inline-block; }
+
+/* Trigger */
+.psel-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem;
+  min-width: 220px;
+  padding: 0.55rem 0.75rem;
+  border: 1.5px solid #b7b7a4;           /* matches your inputs */
+  border-radius: 10px;
+  background: #fff;
+  color: #3f3a35;
+  font-family: 'Playfair Display', serif;
+  cursor: pointer;
+}
+.psel-trigger:hover { border-color: #9ea890; }
+.psel-trigger:focus-visible { outline: 2px solid #6b705c33; }
+
+.psel-value.placeholder { opacity: .7; }
+.psel-chevron { transition: transform .15s ease; }
+.psel-chevron.open { transform: rotate(180deg); }
+
+.psel.is-disabled .psel-trigger {
+  opacity: .6; cursor: not-allowed;
+}
+
+/* Popover */
+.psel-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 20;
+  min-width: 100%;
+  background: #fffaf0;
+  border: 1.5px solid #b7b7a4;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.10);
+  padding: 6px;
+  max-height: 320px;
+  overflow: auto;
+}
+
+/* Options */
+.psel-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: .55rem .7rem;
+  border: 0;
+  background: transparent;
+  border-radius: 10px;
+  color: #3f3a35;
+  font-family: 'Playfair Display', serif;
+  cursor: pointer;
+}
+.psel-option:hover,
+.psel-option:focus {
+  background: #ffe8d6;
+  outline: none;
+}
+.psel-option.selected {
+  background: #cb997e;
+  color: #fffaf0;
+}
+.pretty-select select,
+.ps-trigger {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background: transparent;
+  outline: none;
+  font: inherit;
+  color: inherit;
+}
+
+.ps-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid #b7b7a4;
+  border-radius: 8px;
+  background-color: #fffaf0;
+  cursor: pointer;
+  min-width: 200px;
+}
+
+.ps-value.ps-placeholder {
+  color: #999;
+}
+
+.ps-chevron {
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+.ps-list {
+  position: absolute;
+  z-index: 1000;
+  margin-top: 0.25rem;
+  background: #fffaf0;
+  border: 2px solid #b7b7a4;
+  border-radius: 8px;
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ps-option {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.ps-option:hover,
+.ps-option.is-active {
+  background-color: #fce8d8;
+}
+
+.ps-option.is-selected {
+  font-weight: bold;
+}

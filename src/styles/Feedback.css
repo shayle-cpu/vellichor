@@ -1,0 +1,60 @@
+.fb-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 10000;
+}
+
+.fb-modal {
+  position: fixed; inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: min(580px, 92vw);
+  background: #ffe8d6;
+  border: 2px solid #ddbea9;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  z-index: 10001;
+  padding: 1.25rem 1.25rem 1rem;
+  color: #6b705c;
+  font-family: 'Playfair Display', serif;
+}
+
+.fb-close {
+  position: absolute; top: 8px; right: 12px;
+  border: none; background: transparent; font-size: 1.5rem; cursor: pointer;
+  color: #6b705c;
+}
+
+.fb-title { margin: 0 0 0.25rem; color: #6b705c; font-size: 1.4rem; }
+.fb-sub { margin: 0 0 0.75rem; opacity: 0.85; }
+
+.fb-form { display: grid; gap: 0.75rem; }
+
+.fb-field { display: grid; gap: 0.35rem; }
+.fb-field > span { font-weight: 600; }
+
+.fb-field select,
+.fb-field textarea,
+.fb-field input {
+  width: 90%;
+  border: 2px solid #b7b7a4;
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+  background: #fffaf0;
+  color: #6b705c;
+  font-family: 'Playfair Display', serif;
+}
+
+.fb-field textarea { resize: vertical; min-height: 110px; }
+
+.fb-error { color: #8b0000; background: #ffe0e0; border: 1px solid #ffb3b3; padding: 6px 10px; border-radius: 8px; }
+.fb-success { color: #1b5e20; background: #e4ffe6; border: 1px solid #b7f5c0; padding: 6px 10px; border-radius: 8px; }
+
+.fb-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.25rem; }
+.fb-btn {
+  background: #cb997e; color: #fff; border: 2px solid #cb997e;
+  padding: 0.5rem 0.9rem; border-radius: 10px; cursor: pointer;
+}
+.fb-btn.secondary {
+  background: #fff; color: #6b705c; border-color: #b7b7a4;
+}
+.fb-btn:disabled { opacity: 0.7; cursor: not-allowed; }

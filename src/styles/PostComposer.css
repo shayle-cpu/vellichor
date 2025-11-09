@@ -1,0 +1,123 @@
+/* PostComposer — clean Playfair, single card, no double-box */
+
+/* Variables come from Community.css; safe fallbacks here just in case */
+:root{
+  --cream:#fffaf0;
+  --paper:#fdfaf6;
+  --terracotta:#cb997e;
+  --terracotta-deep:#c18f78;
+  --sage:#b7b7a4;
+  --sage-deep:#6b705c;
+  --ink:#3f3a35;
+  --line:#e7e1d7;
+  --shadow: 0 10px 36px rgba(203,153,126,.12);
+}
+
+/* Everything in the composer uses Playfair */
+.np-composer *{
+  box-sizing: border-box;
+  font-family: "Playfair Display", Georgia, serif;
+  color: var(--ink);
+}
+
+/* Shell (single card) */
+.np-composer.np-composer--community{
+  background: var(--paper);
+  border: 2px solid #ddbea9;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: var(--shadow);
+  width: 100%;
+}
+
+/* Top bar */
+.np-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.np-title{
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+.np-share{
+  background: var(--terracotta);
+  color: #fff;
+  border: 1px solid var(--terracotta-deep);
+  border-radius: 12px;
+  padding: .45rem .9rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.np-share:disabled{
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* Text area */
+.np-textarea{
+  width: 100%;
+  min-height: 92px;
+  resize: vertical;
+  background: #fffdf8;
+  color: var(--ink);
+  border: 2px solid #ddbea9;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+/* Bottom tools row */
+.np-tools{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+}
+.np-tags-label{
+  color: var(--sage-deep);
+}
+.np-chips{
+  display: flex;
+  gap: 8px;
+}
+.np-chip{
+  background: #fff;
+  border: 2px solid var(--sage);
+  color: var(--sage-deep);
+  border-radius: 999px;
+  padding: .38rem .8rem;
+  cursor: pointer;
+}
+.np-chip[disabled]{
+  cursor: default;
+  opacity: .75;
+}
+
+/* Right-side icon container */
+.np-icons{
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+.np-icon{
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--sage-deep);
+}
+.np-icon svg{ display:block; }
+
+/* Mobile tweaks */
+@media (max-width: 680px){
+  .np-share{ padding: .42rem .8rem; }
+  .np-textarea{ min-height: 80px; }
+}

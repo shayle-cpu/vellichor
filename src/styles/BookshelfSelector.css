@@ -1,0 +1,30 @@
+/* src/styles/BookshelfSelector.css */
+.selector-container {
+  text-align: center;
+  padding: 2rem 3rem;
+  font-family: 'Playfair Display', serif;
+  background-image: url('../assets/paper-texture.png');
+  background-size: cover;
+  min-height: 100vh;
+}
+
+.selector-title {
+  font-size: 6rem;
+  margin-bottom: 1rem;
+  color: #909486;
+}
+
+.selector-button {
+  background-color: #cb997e;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.selector-button:hover {
+  background-color: #b07d62;
+}

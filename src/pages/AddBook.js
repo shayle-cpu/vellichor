@@ -1,0 +1,123 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useBooks } from "../context/BookContext";
+import "../styles/AddBook.css";
+
+const ensureHttps = (url) => (url ? url.replace(/^http:/, "https:") : url);
+
+export default function AddBook() {
+  const navigate = useNavigate();
+  const { upsertBook } = useBooks();
+
+  const [shelf, setShelf] = useState("tbr");
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  // Fetch books from Google Books API
+  const fetchBooks = async (search) => {
+    if (!search?.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
+          search
+        )}&maxResults=12`
+      );
+      const data = await res.json();
+
+      if (data.items) {
+        const normalized = data.items.map((item) => {
+          const v = item.volumeInfo || {};
+          const thumb =
+            ensureHttps(v.imageLinks?.thumbnail) ||
+            ensureHttps(v.imageLinks?.smallThumbnail) ||
+            "https://via.placeholder.com/128x193?text=No+Cover";
+
+          return {
+            id: item.id,
+            title: v.title || "Untitled",
+            author: (v.authors && v.authors[0]) || "Unknown Author",
+            series: "",
+            cover: thumb,
+            pageCount: Number(v.pageCount) || 0, // renamed here
+          };
+        });
+        setSuggestions(normalized);
+      } else {
+        setSuggestions([]);
+      }
+    } catch (err) {
+      console.error("Error fetching books:", err);
+      setSuggestions([]);
+    }
+  };
+
+  // When user selects a book, save it to shelf
+  const handleSelectBook = (book) => {
+    upsertBook({
+      ...book,
+      shelf,
+      rating: 0,
+      currentPage: 0,
+    });
+    navigate("/");
+  };
+
+  return (
+    <div className="add-book-page">
+      <h1>Add a Book</h1>
+
+      <div className="select-input-container">
+        <div className="shelf-selection">
+          <label className="shelf-label">Choose a shelf:</label>
+          <select
+            id="shelf"
+            value={shelf}
+            onChange={(e) => setShelf(e.target.value)}
+          >
+            <option value="currentlyReading">Currently Reading</option>
+            <option value="tbr">TBR</option>
+            <option value="finished">Finished</option>
+          </select>
+        </div>
+
+        <input
+          type="text"
+          placeholder="Search by title..."
+          value={query}
+          onChange={(e) => {
+            const val = e.target.value;
+            setQuery(val);
+            fetchBooks(val);
+          }}
+        />
+      </div>
+
+      <ul className="suggestions-list">
+        {suggestions.map((book) => (
+          <li key={book.id} onClick={() => handleSelectBook(book)}>
+            <img
+              src={book.cover}
+              alt={book.title}
+              style={{
+                width: "50px",
+                height: "75px",
+                objectFit: "cover",
+                borderRadius: "6px",
+                marginRight: "10px",
+              }}
+            />
+            <div>
+              <strong>{book.title}</strong>
+              <br />
+              <span>{book.author}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

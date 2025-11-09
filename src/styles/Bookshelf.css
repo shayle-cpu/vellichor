@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap');
+
+/* ---------- Page wrapper ---------- */
+.bookshelf-page {
+  padding: 2rem;
+  background: #fffaf0; /* gentle parchment vibe */
+  background-size: cover;
+  font-family: 'Playfair Display', serif;
+  color: #6b705c;
+}
+
+/* ---------- Header: centered title + centered button ---------- */
+.library-hero { text-align: center; margin-bottom: 1.5rem; }
+
+.library-title {
+  font-family: 'Homemade Apple', cursive;
+  font-size: 2.5rem;
+  color: #596e52;
+  margin: 0 0 0.5rem 0;
+}
+
+.library-actions { display: flex; justify-content: center; }
+
+.add-book-button {
+  display: inline-block;
+  background-color: #ddbea9;
+  color: #6b705c;
+  border: 2px solid #b7b7a4;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  font-family: 'Playfair Display', serif;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.add-book-button:hover { background-color: #ffe8d6; border-color: #cb997e; }
+
+/* ---------- Shelf sections ---------- */
+.shelf-container { margin-bottom: 3rem; }
+
+.shelf-label {
+  display: block;           /* span full shelf width */
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: rgba(252, 212, 187, 0.467);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* The plank row where books sit */
+.shelf {
+  background-image: url('../assets/wood-shelf-texture.png'); /* ensure asset exists */
+  background-size: cover;
+  height: 180px;
+  display: flex;
+  align-items: center;  /* centers covers vertically */
+  justify-content: flex-start;
+  overflow-x: auto;
+  padding: 0 1rem;
+  border-radius: 10px;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) inset;
+
+  /* click safety */
+  position: relative;
+  z-index: 10;
+}
+
+/* ---------- Book cards on shelf ---------- */
+.book {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.book:hover { transform: translateY(-4px); }
+
+.book-cover {
+  height: 150px;
+  width: auto;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
+  background: #fff; /* for transparent images */
+}
+
+/* ---------- Empty shelf text ---------- */
+.empty-shelf {
+  color: #f4f4f4;
+  font-style: italic;
+  margin: auto 0;
+}
+
+/* ---------- DNF grayscale (works whether Book adds a class or we add a wrapper) ---------- */
+/* If your Book component adds class 'dnf' to the card or image */
+.book.dnf .book-cover,
+.book-cover.dnf {
+  filter: grayscale(100%) contrast(0.9) brightness(0.95);
+}
+
+/* For extra safety, if your Book sets a data attribute like data-shelf="dnf" */
+.book[data-shelf="dnf"] .book-cover,
+.book-cover[data-shelf="dnf"] {
+  filter: grayscale(100%) contrast(0.9) brightness(0.95);
+}

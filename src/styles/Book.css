@@ -1,0 +1,50 @@
+.book {
+  cursor: pointer;
+  margin: 0 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: inline-block;
+}
+
+.book-cover {
+  height: 150px;       /* matches your shelf height */
+  width: auto;
+  display: block;      /* ensure it actually renders */
+  border-radius: 4px;
+  box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
+  background: #fff;    /* in case of transparent images */
+}
+
+.book:hover {
+  transform: translateY(-4px);
+}
+/* Remove button hidden until hover */
+.book {
+  position: relative;
+}
+
+.book-remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: #6b705c;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  padding: 0;
+}
+
+.book:hover .book-remove-btn {
+  opacity: 1;
+}
+
+.book-remove-btn:hover {
+  background-color: rgba(255, 255, 255, 1);
+}

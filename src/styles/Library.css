@@ -1,0 +1,7 @@
+.library {
+  background-image: url('../assets/paper-texture.png');
+  background-size: cover;
+  background-repeat: repeat;
+  min-height: 100vh;
+  padding: 20px;
+}

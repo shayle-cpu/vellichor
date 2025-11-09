@@ -1,0 +1,40 @@
+/* Scoped 'rgc-' prefix so this never conflicts with Profile.css */
+
+.rgc-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.rgc-title {
+  font-family: 'Playfair Display', serif;
+  color: #6b705c;
+  font-size: 1.2rem;
+  line-height: 1.05;
+  margin: 0 0 6px 0;
+}
+
+.rgc-candleBox {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+
+.rgc-candle {
+  height: 100%;
+  max-height: inherit; /* inherits from inline maxHeight prop */
+  width: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+.rgc-text {
+  margin-top: 6px;
+  font-family: 'Playfair Display', serif;
+  color: #6b705c;            /* light green text */
+  font-size: 1rem;
+  line-height: 1.1;
+}

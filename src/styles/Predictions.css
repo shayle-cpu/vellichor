@@ -1,0 +1,169 @@
+/* src/styles/Predictions.css */
+:root{
+  --ink:#2f2a24;
+  --sage:#6b705c;
+  --sage-2:#8c927f;
+  --terracotta:#cb997e;
+  --beige:#e7e1d7;
+  --beige-2:#ddbea9;
+  --paper:#fffaf2;
+}
+
+.predictions-page{
+  max-width: 980px;
+  margin: 24px auto 56px;
+  padding: 0 16px;
+  font-family: "Playfair Display", serif;
+  color: var(--ink);
+}
+
+.predictions-title{
+  color: var(--sage);
+  font-size: clamp(28px, 2.4vw + 12px, 40px);
+  margin: 0 0 12px;
+}
+
+/* Card wrapper */
+.predictions-form{
+  background: var(--paper);
+  border: 1px solid var(--beige-2);
+  border-radius: 16px;
+  box-shadow: 0 10px 26px rgba(0,0,0,.06);
+  padding: 18px 18px 16px;
+  margin-bottom: 22px;
+  overflow: hidden;
+}
+
+/* First row layout: big title + fixed width side fields */
+.row{
+  display: grid;
+  grid-template-columns: 1fr 180px 180px;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 860px){
+  .row{ grid-template-columns: 1fr; }
+}
+
+.field{ display:block; }
+.field--sm .input{ height: 44px; }
+
+/* labels like modal headings */
+.label{
+  display:block;
+  color: var(--sage);
+  font-weight: 800;
+  margin: 6px 0 8px;
+}
+
+/* inputs */
+.input, .textarea{
+  box-sizing: border-box;
+  width: 100%;
+  background: #fff;
+  color: var(--ink);
+  border: 1.5px solid var(--beige-2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+  box-shadow: inset 0 1px 0 rgba(203,153,126,.14);
+}
+.input{ height: 44px; }
+
+.input:focus, .textarea:focus{
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 3px rgba(203,153,126,.22);
+}
+
+.textarea{ min-height: 150px; resize: vertical; }
+
+.form-actions{ margin-top: 10px; }
+
+/* buttons */
+.btn{
+  border:0;
+  cursor:pointer;
+  font-family:"Playfair Display", serif;
+  font-weight:800;
+  padding: .78rem 1.15rem;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--terracotta);
+  box-shadow: 0 6px 18px rgba(203,153,126,.35), inset 0 -2px 0 rgba(0,0,0,.08);
+  transition: transform .05s ease-in-out, filter .15s ease;
+}
+.btn:hover{ filter: brightness(1.04); }
+.btn:active{ transform: translateY(1px); }
+.btn[disabled]{ opacity:.7; cursor: default; }
+
+.btn.ghost{
+  background:#fff; color:var(--sage);
+  border:2px solid var(--beige); box-shadow:none;
+}
+.btn.ghost.subtle{ padding:.6rem 1rem; border-radius:14px; }
+.btn.ghost.danger-outline{
+  padding:.6rem 1rem; border-radius:14px;
+  color:#b26b65; border-color:#b26b65;
+}
+.btn.ghost.subtle:hover{ border-color:#cfc7bc; }
+.btn.ghost.danger-outline:hover{ border-color:#a15d58; }
+
+/* sections & cards */
+.section-head{
+  color: var(--sage);
+  font-size: 22px;
+  margin: 22px 0 10px;
+}
+.muted{ color: var(--sage-2); }
+
+.cards{ list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+
+.card{
+  background:#fffdf8;
+  border:1px solid var(--beige);
+  border-radius:16px;
+  padding: 12px 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.04);
+}
+.card.correct{ border-color:#bdd8bf; box-shadow: 0 6px 18px rgba(80,130,80,.06); }
+.card.incorrect{ border-color:#e4bcbc; box-shadow: 0 6px 18px rgba(160,80,80,.05); }
+
+/* head with badge on right */
+.card-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:6px;
+}
+.card-title{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+.card .book{ font-weight:800; }
+.card .meta{ color:var(--sage-2); }
+
+/* body */
+.pred{ margin:.45rem 0 .7rem; line-height:1.5; }
+
+/* status pill */
+.badge{
+  --pad-y:.28rem; --pad-x:.8rem;
+  display:inline-block;
+  padding: var(--pad-y) var(--pad-x);
+  border-radius:999px;
+  font-weight:800;
+  letter-spacing:.2px;
+  border:1px solid transparent;
+}
+.badge.pending{
+  color:#5b5f52; background:#f0f2eb; border-color:#d3d8c8;
+}
+.badge.correct{
+  color:#315a35; background:#e9f3ea; border-color:#bdd8bf;
+}
+.badge.incorrect{
+  color:#7b3b3b; background:#f8eaea; border-color:#e4bcbc;
+}
+
+/* actions row */
+.actions{ display:flex; gap:10px; flex-wrap:wrap; }

@@ -1,0 +1,433 @@
+:root {
+  --pt-terracotta: #cb997e;
+  --pt-beige: #ddbea9;
+  --pt-peach: #ffe8d6;
+  --pt-sage: #b7b7a4;
+  --pt-green: #6b705c;
+  --pt-cream: #fffaf0;
+}
+
+.ch-page {
+  padding: 1.5rem;
+  background: var(--pt-cream);
+  min-height: 100vh;
+  font-family: 'Playfair Display', serif;
+  color: var(--pt-green);
+}
+
+.ch-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 0.3px;
+  text-align: center;
+  font-family: 'Homemade Apple', cursive;
+}
+
+.ch-sub {
+  opacity: 0.9;
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* grid */
+.ch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 18px;
+  margin-top: 1rem;
+}
+
+/* Card */
+.ch-card {
+  background: linear-gradient(180deg, #ffffff 0%, #fffaf2 100%);
+  border: 1px solid #e9dccb;
+  border-radius: 16px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
+  padding: 14px;
+  transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+  cursor: pointer;
+  position: relative; /* for delete button */
+}
+
+.ch-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+}
+
+.ch-card--done {
+  border-color: #cfe6cf;
+  box-shadow: 0 0 0 4px rgba(140, 180, 140, 0.14) inset;
+}
+
+/* header row inside card */
+.ch-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.ch-head__meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.ch-title {
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+  color: var(--pt-green);
+}
+
+.ch-desc {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+/* Hide wreath circles ONLY on challenge cards */
+.ch-card > .wreath {
+  display: none !important;
+}
+
+/* Show wreath circles in modal */
+.ch-modal .wreath {
+  display: grid !important;
+}
+
+/* Delete button */
+.ch-card button[aria-label="Delete challenge"] {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: bold;
+  color: #cb997e;
+  background: transparent;
+  border: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  user-select: none;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  z-index: 10;
+}
+
+/* Show delete button on hover */
+.ch-card:hover button[aria-label="Delete challenge"] {
+  opacity: 1;
+}
+
+/* The delete button content: simple "×" */
+.ch-card button[aria-label="Delete challenge"]::before {
+  content: "×";
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 700;
+  user-select: none;
+}
+
+/* ---------- Modal styles for centered popup ---------- */
+.ch-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.ch-modal {
+  background: #fffdf8;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  padding: 16px;
+  width: min(900px, 92vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-modal__close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--pt-green);
+  align-self: flex-end;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.ch-modal__title {
+  font-weight: 800;
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  font-family: 'Homemade Apple', cursive;
+  text-align: center;
+  color: var(--pt-green);
+}
+
+.ch-modal__desc {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  opacity: 0.9;
+}
+
+/* Responsive tweaks */
+@media (max-width: 720px) {
+  .ch-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Book covers in modal */
+.ch-book img {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e6e0d6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ch-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Hide figcaption for book covers */
+.ch-book figcaption {
+  display: none;
+}
+
+/* Challenge modal book slots */
+.book-slot {
+  position: relative;
+  width: 80px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px dashed var(--pt-sage);
+  background-color: var(--pt-beige);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Challenge modal book slot images */
+.book-slot.has-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Avoid cropping */
+  border-radius: 12px;
+  transition: filter 0.3s ease;
+}
+
+/* Blur only the book image on hover */
+.book-slot.has-cover:hover img {
+  filter: blur(2px);
+}
+
+/* Overlay (Change text) */
+.book-slot .overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--pt-green);
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  background: rgba(255 255 255 / 0.8);
+  padding: 4px 8px;
+  border-radius: 8px;
+  z-index: 2;
+}
+
+.book-slot.has-cover:hover .overlay {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Remove button */
+.remove-btn {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(203, 153, 126, 0.85);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  user-select: none;
+  z-index: 2;
+}
+
+.book-slot.has-cover:hover .remove-btn {
+  opacity: 1 !important;
+}
+
+/* Hide the default checkbox input in book picker modal */
+.bp-card input[type="checkbox"] {
+  display: none;
+}
+
+/* Position relative for the label */
+.bp-card {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* Book cover styling in picker */
+.bp-cover-wrap {
+  position: relative;
+  width: 80px;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Overlay with semi-transparent theme color and checkmark in picker */
+.bp-card.bp-card--checked .bp-cover-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* covers entire cover */
+  background-color: rgba(203, 153, 126, 0.6); /* terracotta with transparency */
+  border-radius: 10px;
+  z-index: 1;
+}
+
+/* Checkmark in the center */
+.bp-card.bp-card--checked .bp-cover-wrap::after {
+  content: "✔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2.2rem;
+  font-weight: bold;
+  z-index: 2;
+  pointer-events: none;
+}
+/* Active (clicked) challenge card */
+.ch-card--active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centers content vertically */
+  transform: translateY(-4px); /* subtle lift */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transition: all 0.25s ease;
+}
+
+.ch-card--active .ch-head {
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.ch-card--active .ch-desc {
+  margin-top: 0.3rem;
+}
+/* Centered modal body */
+.ch-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* centers the content horizontally */
+}
+
+.ch-modal-body {
+  width: 100%;
+  max-width: 760px;            /* comfy readable width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* center children */
+  text-align: center;          /* center text */
+  padding: 4px 8px 16px;
+  box-sizing: border-box;
+}
+
+.ch-modal__title {
+  margin: 0 0 6px;             /* title sits just above description */
+}
+
+.ch-modal__desc {
+  margin: 0 0 16px;            /* directly under the title */
+}
+
+/* Grid of book slots centered under description */
+.ch-slot-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;     /* center slots */
+  align-items: center;
+}
+/* Layout: left text and right progress take equal width */
+.ch-card-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.ch-head--left {
+  flex: 1 1 0;            /* left side grows */
+  text-align: left;
+}
+.ch-progress {
+  flex: 1 1 0;            /* right side matches left width */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;           /* avoid overflow */
+}
+
+/* Label */
+.ch-progress__label {
+  font-size: 0.95rem;
+  color: var(--pt-green);
+  white-space: nowrap;
+}
+
+/* Horizontal progress bar (fills from RIGHT to LEFT) */
+.ch-pbar {
+  position: relative;
+  flex: 1;
+  height: 12px;
+  background: #eee3d2;
+  border-radius: 999px;
+  border: 1px solid #e0d4c4;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+.ch-pbar__fill {
+  position: absolute;
+  left: 0;                /* ✅ start from the left */
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--pt-terracotta), #c18f78); /* gradient flows right */
+  transition: width 220ms ease;
+}

@@ -1,0 +1,131 @@
+.series-tracker {
+  padding: 2rem 3rem;
+  background: transparent;
+  font-family: 'Homemade Apple', cursive;
+}
+
+.tracker-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0 2rem;
+}
+
+.tracker-title {
+  font-size: 2.2rem;
+  color: #6b705c;
+  letter-spacing: 0.5px;
+}
+
+.add-series-form {
+  position: relative;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.series-search-input {
+  width: min(700px, 90vw);
+  padding: 0.9rem 1.1rem;
+  border: 2px solid #ddbea9;
+  border-radius: 999px;
+  background: #ffe8d6;
+  outline: none;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: #6b705c;
+}
+
+.confirm-add-button {
+  padding: 0.9rem 1.1rem;
+  border-radius: 999px;
+  border: 2px solid #cb997e;
+  background: #cb997e;
+  color: #fffaf0;
+  cursor: pointer;
+  font-family: 'Playfair Display', serif;
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 110%;
+  width: min(700px, 90vw);
+  max-height: 320px;
+  overflow: auto;
+  background: #fffaf0;
+  border: 2px solid #ddbea9;
+  border-radius: 12px;
+  list-style: none;
+  padding: 0.5rem 0;
+  margin: 0;
+}
+
+.suggestions-dropdown li {
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+}
+
+.suggestions-dropdown li:hover {
+  background: #ffe8d6;
+}
+
+.manual-add-card {
+  border: 2px solid #b7b7a4;
+  border-radius: 12px;
+  background: #fffaf0;
+  padding: 1rem;
+  margin: 1rem auto 2rem;
+  max-width: 900px;
+}
+
+.manual-add-header {
+  color: #6b705c;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.manual-book-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 2fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.manual-book-row input {
+  padding: 0.6rem 0.75rem;
+  border: 2px solid #ddbea9;
+  border-radius: 10px;
+  background: #ffe8d6;
+  font-family: 'Playfair Display', serif;
+  color: #6b705c;
+}
+
+.manual-buttons {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.manual-buttons button {
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  border: 2px solid #cb997e;
+  background: #cb997e;
+  color: #fffaf0;
+  cursor: pointer;
+  font-family: 'Playfair Display', serif;
+}
+/* Search suggestions - force Playfair Display */
+/* Search suggestions - force Playfair Display */
+.suggestions-dropdown {
+  font-family: 'Playfair Display', serif !important;
+  font-size: 1.2rem; /* adjust size as needed */
+  line-height: 1.4;
+}
+
+.suggestions-dropdown li {
+  font-family: 'Playfair Display', serif !important;
+}
+

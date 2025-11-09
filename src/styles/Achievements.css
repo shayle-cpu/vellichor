@@ -1,0 +1,132 @@
+/* ====== Container ====== */
+.ach-section { padding: 1rem 0; }
+.ach-heading-row {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 0.75rem;
+}
+
+.ach-reset-link {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: #9aa099;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.ach-reset-link:hover {
+  color: #6b705c;
+  text-decoration: underline;
+}
+
+/* ====== Circles Grid ====== */
+.ach-grid.circles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 28px 32px; /* row x column */
+  justify-items: center;
+  align-items: start;
+}
+
+/* ====== Badge Circles ====== */
+.ach-card {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #e7ddd1;
+  background: #f5f3ef;
+  color: #8c9186;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0;
+  font-family: 'Playfair Display', serif;
+  transition:
+    background-color .25s ease,
+    border-color .25s ease,
+    color .25s ease,
+    transform .12s ease,
+    box-shadow .2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.ach-title {
+  font-weight: 800;
+  font-size: 0.9rem;
+  line-height: 1.15;
+  padding: 0 8px;
+}
+
+/* Locked */
+.ach-card.locked {
+  background: #dcdcd6;
+  border-color: #b7b7a4;
+}
+.ach-card.locked .ach-title {
+  color: #a4a89f;
+}
+.ach-card.locked:hover {
+  filter: brightness(0.995);
+  cursor: default;
+}
+
+/* Earned */
+.ach-card.earned {
+  background: #ffe8d6;
+  border-color: #ddbea9;
+  color: #6b705c;
+  cursor: pointer;
+}
+.ach-card.earned:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* Click pop animation */
+.ach-card.clicked {
+  animation: ach-pop 260ms ease-out;
+}
+@keyframes ach-pop {
+  0% { transform: scale(1); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* ====== Modal ====== */
+.ach-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.25);
+  backdrop-filter: blur(1px);
+  z-index: 3000;
+  animation: ach-fade 180ms ease-out;
+}
+
+.ach-modal {
+  position: fixed !important;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(.96);
+  opacity: 0;
+  transition: transform .18s ease, opacity .18s ease;
+  z-index: 3001;
+  max-width: 520px;
+  width: min(92vw, 520px);
+}
+
+.ach-modal[data-open="true"] {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+@keyframes ach-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes ach-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,531 @@
+/* Page base */
+.profile-page {
+  min-height: 100vh;
+  background: #fffaf0; /* cream parchment */
+  padding: 2rem 1rem 3rem;
+  font-family: 'Playfair Display', serif;
+  color: #2d2a26;
+}
+
+/* Header layout: left profile info, right candle */
+.profile-header {
+  display: grid;
+  grid-template-columns: 1fr 300px; /* left | right */
+  align-items: center;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto 1.5rem;
+}
+
+.profile-left {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.profile-right {
+  display: flex;
+  justify-content: center;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 999px;
+  background: #e8e1d6;
+  box-shadow: inset 0 0 0 3px #b7b7a4;
+}
+
+.identity .name {
+  margin: 0;
+  font-size: 2.1rem;
+  line-height: 1.1;
+  color: #3f3a35;
+}
+.identity .username {
+  margin-top: .25rem;
+  font-size: .95rem;
+  color: #6b705c; /* light green */
+}
+.identity .bio {
+  margin-top: .35rem;
+  font-size: 1rem;
+  color: #6b705c;
+  opacity: .95;
+}
+
+.edit-btn {
+  margin-top: .5rem;
+  background: #ffe8d6;         /* peach */
+  border: 1.5px solid #cb997e; /* terracotta */
+  border-radius: 10px;
+  padding: .4rem .7rem;
+  font-family: 'Playfair Display', serif;
+  color: #6b705c;
+  cursor: pointer;
+}
+.edit-btn:hover { background: #f7dcc5; }
+
+/* Stats — peach bubbles with light green text */
+.profile-section {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  color: #3f3a35;
+  margin: 0 0 .75rem;
+}
+
+.reader-stats { margin-top: 1rem; }
+
+.stats-bubbles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.stat-bubble {
+  height: 140px;
+  border-radius: 999px;
+  background: #ffe8d6;   /* peach background */
+  border: 2px solid #b7b7a4;
+  box-shadow: 2px 4px 10px rgba(0,0,0,.06);
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.stat-bubble .label {
+  font-size: .95rem;
+  color: #6b705c;        /* light green text */
+}
+
+.stat-bubble .value {
+  font-size: 1.6rem;
+  color: #6b705c;        /* light green text */
+  font-weight: 700;
+  line-height: 1.1;
+  margin-top: .15rem;
+}
+
+/* Modal (theme matched) */
+.profile-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: 5000;
+}
+.profile-modal {
+  position: fixed;
+  left: 50%;
+  top: 8%;
+  transform: translateX(-50%);
+  width: min(720px, 94vw);
+  background: #fffaf0;               /* cream */
+  border: 2px solid #b7b7a4;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.18);
+  z-index: 5010;
+  font-family: 'Playfair Display', serif;
+  color: #3f3a35;
+  max-height: 90vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+}
+.profile-modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .9rem 1rem .4rem;
+  border-bottom: 1px solid #e7e1d7;
+}
+.profile-modal-head h3 { margin: 0; font-size: 1.4rem; }
+.modal-x {
+  background: transparent;
+  border: 1px solid #b7b7a4;
+  border-radius: 999px;
+  width: 28px; height: 28px; cursor: pointer;
+}
+
+.profile-modal-body {
+  padding: .9rem 1rem 0;
+  overflow: auto;
+  display: grid;
+  gap: .65rem;
+}
+
+.profile-modal-foot {
+  padding: .9rem 1rem 1rem;
+  display: flex; gap: .5rem; justify-content: flex-end;
+  border-top: 1px solid #e7e1d7;
+}
+
+.edit-label { color: #6b705c; }
+.edit-input, .edit-textarea {
+  width: 90%;
+  padding: .6rem .8rem;
+  border: 2px solid #b7b7a4;
+  border-radius: 12px;
+  background: #fffef8;
+  font-family: 'Playfair Display', serif;
+  color: #3f3a35;
+  font-size: 1rem;
+}
+.edit-textarea { resize: vertical; }
+
+.cancel-btn, .save-btn {
+  padding: .55rem .9rem; border-radius: 10px; border: 1px solid #b7b7a4;
+  font-family: 'Playfair Display', serif;
+}
+.cancel-btn { background:#fffaf0; color:#6b705c; }
+.save-btn   { background:#cb997e; color:#fff; border-color:#c18f78; font-weight:700; }
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .profile-header { grid-template-columns: 1fr; }
+  .profile-right { margin-top: 10px; }
+  .stats-bubbles { grid-template-columns: repeat(2, 1fr); }
+}
+/* --- hard restore for profile layout & typography --- */
+.profile-page .section-title {
+  font-family: 'Playfair Display', serif !important;
+  font-size: 1.4rem !important;
+  color: #3f3a35 !important;
+  margin: 0 0 .75rem !important;
+}
+
+/* If you want Achievements title cursive, target that one only */
+.achievements-section .section-title {
+  font-family: 'Homemade Apple', cursive !important;
+}
+
+/* Stats: peach bubbles with light-green text */
+.profile-page .reader-stats {
+  max-width: 1100px !important;
+  margin: 0 auto 2rem !important;
+}
+.profile-page .stats-bubbles,
+.profile-page .reader-stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(160px, 1fr)) !important;
+  gap: 1rem !important;
+}
+.profile-page .stat-bubble,
+.profile-page .rs-card {
+  height: 140px !important;
+  border-radius: 999px !important;
+  background: #ffe8d6 !important;      /* peach */
+  border: 2px solid #b7b7a4 !important;
+  box-shadow: 2px 4px 10px rgba(0,0,0,.06) !important;
+  display: grid !important;
+  place-items: center !important;
+  text-align: center !important;
+}
+.profile-page .stat-bubble .label,
+.profile-page .rs-label {
+  color: #6b705c !important;           /* light green */
+  font-size: .95rem !important;
+}
+.profile-page .stat-bubble .value,
+.profile-page .rs-value {
+  color: #6b705c !important;
+  font-size: 1.6rem !important;
+  font-weight: 700 !important;
+}
+
+/* Mobile fallback */
+@media (max-width: 900px) {
+  .profile-page .stats-bubbles,
+  .profile-page .reader-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+/* ==== Restore header sizing & typography ==== */
+.profile-page .profile-header{
+  /* keep two columns, give the left side more breathing room */
+  grid-template-columns: minmax(520px, 1fr) 300px !important;
+}
+
+.profile-page .identity .name{
+  font-size: 2.4rem !important;
+  line-height: 1.1 !important;
+}
+
+.profile-page .identity .username{
+  margin-top: .3rem !important;
+  font-size: 1.05rem !important;
+  color: #6b705c !important;
+  letter-spacing: .2px !important;
+}
+
+.profile-page .identity .bio{
+  margin-top: .5rem !important;
+  font-size: 1.05rem !important;
+  color: #6b705c !important;
+  opacity: .95 !important;
+}
+
+.profile-page .edit-btn{
+  margin-top: .55rem !important;
+}
+
+/* ==== Favorites shelf (rail + wood plank) ==== */
+.profile-page .favorites{
+  max-width: 1100px !important;
+  margin: 0 auto 1.25rem !important;
+}
+
+.profile-page .fav-shelf-wrap{
+  position: relative !important;
+  padding-bottom: 28px !important; /* space for plank */
+}
+
+.profile-page .fav-shelf-rail{
+  display: grid !important;
+  grid-auto-flow: column !important;
+  grid-auto-columns: max-content !important;
+  gap: .9rem !important;
+  overflow-x: auto !important;
+  padding: .25rem .25rem .75rem !important;
+  scroll-snap-type: x proximity !important;
+}
+
+.profile-page .fav-book{
+  scroll-snap-align: start !important;
+}
+
+/* Wood plank under the covers */
+.profile-page .wood-shelf{
+  position: absolute !important;
+  left: 0; right: 0; bottom: 0;
+  height: 26px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 8px rgba(0,0,0,.08) !important;
+  pointer-events: none !important;
+
+  /* Try a texture first… */
+  background: url("../assets/wood-shelf-texture.png") center/cover no-repeat;
+}
+
+/* …if the texture file is missing, use a faux-wood gradient fallback */
+@supports (background: linear-gradient(#000, #000)) {
+  .profile-page .wood-shelf{
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,0)) 0 0/100% 100%,
+      repeating-linear-gradient(
+        90deg,
+        #c49a7a 0px,
+        #c49a7a 6px,
+        #b68666 6px,
+        #b68666 10px,
+        #cfa081 10px,
+        #cfa081 14px
+      );
+  }
+}
+/* === Align all main sections with the header === */
+.profile-page .achievements-section,
+.profile-page .favorites,
+.profile-page .reader-stats {
+  max-width: 1100px !important;  /* match header container */
+  margin: 0 auto 1.5rem !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Consistent title spacing */
+.profile-page .achievements-section .section-title,
+.profile-page .favorites .section-title,
+.profile-page .reader-stats .section-title {
+  margin: 0 0 .75rem !important;
+}
+
+/* Use Homemade Apple for Favorites + Stats titles */
+.profile-page .favorites .section-title,
+.profile-page .reader-stats .section-title {
+  font-family: 'Homemade Apple', cursive !important;
+  font-weight: 400 !important;
+}
+
+/* (Optional) keep Achievements cursive too; remove if you want Playfair there */
+.profile-page .achievements-section .section-title {
+  font-family: 'Homemade Apple', cursive !important;
+  font-weight: 400 !important;
+}
+/* === Profile modal: inline @, status pill, and themed pills/buttons === */
+.profile-modal .username-field { position: relative; }
+
+/* the inline @ inside the input */
+.profile-modal .username-field .at {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b705c;
+  opacity: .7;
+  pointer-events: none;
+  font-size: 1rem;
+}
+
+/* make room for the @ and the status chip */
+.profile-modal .username-field .username-input {
+  padding-left: 26px !important;
+  padding-right: 96px !important; /* space for status-pill on the right */
+}
+
+/* availability chip */
+.profile-modal .status-pill {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: .95rem;
+  padding: .15rem .55rem;
+  border-radius: 999px;
+  line-height: 1.1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.profile-modal .status-pill.ok {
+  color: #2f7d32;
+  background: #eaf7ea;
+  border-color: #a8d5b1;
+}
+.profile-modal .status-pill.bad {
+  color: #a33;
+  background: #fdecec;
+  border-color: #f1b5b5;
+}
+.profile-modal .status-pill.checking {
+  color: #6b705c;
+  background: #f3efe6;
+  border-color: #d9d3c4;
+}
+
+/* pill editor row */
+.profile-modal .pill-editor {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+}
+
+/* themed Add button */
+.profile-modal .pill-add-btn {
+  padding: .45rem .8rem;
+  border-radius: 10px;
+  border: 1px solid #cb997e;
+  background: #ffe8d6;
+  color: #6b705c;
+  cursor: pointer;
+  font-family: 'Playfair Display', serif;
+}
+.profile-modal .pill-add-btn:hover { background: #f7dcc5; }
+
+/* tag list */
+.profile-modal .pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-top: .5rem;
+}
+
+/* removable pill theme */
+.profile-modal .pill.removable {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .3rem .6rem;
+  border-radius: 999px;
+  background: #ffe8d6;         /* peach */
+  border: 1px solid #cb997e;   /* terracotta */
+  color: #6b705c;              /* green text */
+  font-size: .9rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,.05);
+}
+.profile-modal .pill.removable .pill-x {
+  background: transparent;
+  border: none;
+  color: #6b705c;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 .1rem;
+}
+.profile-modal .pill.removable .pill-x:hover { color: #3f3a35; }
+/* Username field container */
+.username-field {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* space between elements */
+  position: relative;
+  max-width: 320px; /* controls overall width */
+}
+
+/* The @ symbol */
+.username-field .at {
+  position: absolute;
+  left: 10px;
+  color: #6b705c;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+/* The input itself */
+.username-input {
+  padding-left: 22px; /* space for @ */
+  flex: 1;
+  min-width: 120px;
+  max-width: 200px; /* <-- shorten input */
+}
+
+/* Status pill */
+/* Base pill style */
+.status-pill {
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  font-family: 'Playfair Display', serif;
+}
+
+/* Available = green */
+.username-field.ok .status-pill {
+  background-color: #d4edda; /* pale green */
+  color: #155724; /* dark green text */
+  border: 1px solid #c3e6cb;
+}
+
+/* Unavailable = red */
+.username-field.bad .status-pill {
+  background-color: #f8d7da; /* pale red */
+  color: #721c24; /* dark red text */
+  border: 1px solid #f5c6cb;
+}
+
+/* While checking */
+.username-field.checking .status-pill {
+  background-color: #fff3cd; /* pale yellow */
+  color: #856404; /* dark yellow text */
+  border: 1px solid #ffeeba;
+}
+.friend-btn {
+  background: #fbebe0;
+  border: 1px solid #b7b7a4;
+  color: #6b705c;
+  font-family: 'Playfair Display', serif;
+  border-radius: 12px;
+  padding: .45rem .8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.friend-btn:hover { background: #ffe8d6; border-color: #cb997e; }
+.friend-btn:disabled { opacity: .75; cursor: default; }
+
+.friend-secondary {
+  background: #fff;
+  border: 1px solid #e7e1d7;
+}
+.friend-secondary:hover { background: #fffaf0; }
+

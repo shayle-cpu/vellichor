@@ -1,13 +1,129 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  font-family: 'Playfair Display', serif;
+  background: var(--pt-cream);
+  background-size: cover;
+  background-repeat: repeat;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Sidebar container */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  background-color: #fffaf0; /* soft paper peach */
+  border-right: 2px solid #b7b7a4; /* muted sage border */
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  padding: 2rem 1rem;
+  font-family: 'Playfair Display', serif;
+  color: #6b705c; /* earthy green text */
+  transform: translateX(-100%); /* fully offscreen */
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+  box-sizing: border-box; /* include borders in width */
+}
+
+/* Sidebar visible */
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* Toggle hamburger button */
+.sidebar-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  width: 35px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 1100; /* above sidebar */
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+}
+
+/* Hamburger bars */
+.sidebar-toggle .bar {
+  height: 4px;
+  background-color: #cb997e; /* warm terracotta */
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Animate toggle to X when open */
+.sidebar-toggle.open .bar:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+.sidebar-toggle.open .bar:nth-child(2) {
+  opacity: 0;
+}
+.sidebar-toggle.open .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Sidebar nav links */
+.sidebar a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #6b705c;
+  font-weight: 600;
+  font-family: 'Playfair Display', serif;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+  background-color: #ffe8d6; /* soft peach hover */
+  color: #cb997e; /* terracotta hover */
+}
+
+/* Push main content to right when sidebar open */
+body.sidebar-open #main-content {
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 720px) {
+  .sidebar {
+    width: 200px;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  body.sidebar-open #main-content {
+    margin-left: 200px;
+  }
+}
+/* Logo styling inside sidebar */
+.sidebar-logo {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-logo img {
+  max-width: 100px;  /* smaller size */
+  width: 100px;
+  height: auto;
+  border-radius: 2px; /* slightly rounded */
+  opacity: 0.95;      /* softer look */
+}
+/* Kill interactions from hidden overlays */
+.sidebar:not(.open),
+.sidebar-backdrop,
+.nav-overlay {
+  pointer-events: none !important;
+  z-index: 0 !important;
 }

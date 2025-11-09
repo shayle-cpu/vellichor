@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "assets"
+		},
+		{
+			"path": "components"
+		},
+		{
+			"path": "context"
+		},
+		{
+			"path": "pages"
+		},
+		{
+			"path": "styles"
+		}
+	]
+}

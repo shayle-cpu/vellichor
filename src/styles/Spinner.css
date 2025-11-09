@@ -1,0 +1,69 @@
+.spinner-container {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: #fffaf0; /* gentle parchment vibe */
+  background-size: cover;
+  font-family: 'Homemade Apple', cursive;
+  min-height: 100vh;
+  color: #6b705c;
+}
+
+.spinner-title {
+  font-size: 2.5rem;
+  color: #6b705c;
+  margin-bottom: 2rem;
+}
+
+.wheel-wrapper {
+  position: relative;
+  width: 420px;
+  height: 420px;
+  margin: 0 auto 2rem;
+}
+
+.wheel {
+  transition: transform 3s ease-out;
+  width: 100%;
+  height: 100%;
+}
+
+.wheel-img {
+  width: 100%;
+  height: 100%;
+}
+
+.pointer-img {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  width: 100px;
+  z-index: 2;
+}
+
+.spin-button {
+  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #ddbea9;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Playfair Display', serif;
+  transition: background-color 0.3s ease;
+}
+
+.spin-button:hover {
+  background-color: #ffe8d6;
+}
+
+.prompt-result {
+  margin-top: 2rem;
+  font-size: 1.3rem;
+  padding: 1.5rem;
+  background-color: #fffaf0;
+  border: 2px dashed #b7b7a4;
+  border-radius: 12px;
+  display: inline-block;
+  max-width: 80%;
+  font-style: italic;
+}

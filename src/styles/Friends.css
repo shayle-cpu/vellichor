@@ -1,0 +1,166 @@
+/* src/styles/Friends.css */
+
+.friends-page {
+  max-width: 980px;
+  margin: 28px auto;
+  padding: 0 16px 40px;
+  font-family: 'Playfair Display', serif;
+  color: #3f3a35;
+}
+
+/* Hero */
+.friends-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.friends-title {
+  font-size: clamp(28px, 4vw, 42px);
+  margin: 0;
+}
+.friends-sub {
+  margin: 6px 0 0 0;
+  color: #6b705c;
+  opacity: 0.95;
+}
+.friends-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* Chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: .3rem .7rem;
+  border-radius: 999px;
+  background: #ffe8d6;
+  border: 1px solid #ddbea9;
+  color: #6b705c;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Error */
+.friends-error {
+  margin: 12px 0 18px;
+  color: #8b3a3a;
+  background: #fff2f2;
+  border: 1px solid #f0c9c9;
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+/* Section cards */
+.friend-section {
+  background: #fffbf6;
+  border: 2px solid #ddbea9;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  margin-top: 18px;
+}
+.friend-section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px 8px;
+  border-bottom: 1px dashed #e7e1d7;
+}
+.friend-section-title {
+  margin: 0;
+  font-size: 22px;
+}
+.friend-section-head .linky {
+  margin-left: auto;
+  color: #596e52;
+  text-decoration: none;
+  border: 1px solid #b7b7a4;
+  padding: .35rem .6rem;
+  border-radius: 10px;
+  background: #fffaf0;
+}
+.friend-section-head .linky:hover {
+  background: #ffe8d6;
+  border-color: #cb997e;
+}
+.friend-section-body {
+  padding: 12px 14px 14px;
+}
+
+/* Lists */
+.friend-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.friend-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #e7e1d7;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.friend-person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.friend-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #b7b7a4;
+}
+.friend-person-meta { min-width: 0; }
+.friend-name {
+  color: #3f3a35;
+  font-weight: 700;
+  text-decoration: none;
+}
+.friend-name:hover { text-decoration: underline; }
+.friend-handle {
+  color: #6b705c;
+  font-size: 14px;
+}
+
+/* Buttons */
+.row-actions { display: flex; gap: 8px; }
+.btn {
+  font-family: 'Playfair Display', serif;
+  border-radius: 10px;
+  padding: .45rem .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .02s ease, background .2s ease, border-color .2s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary {
+  background: #cb997e;
+  color: #fff;
+  border: 1px solid #b7b7a4;
+}
+.btn-primary:hover { background: #c1886b; }
+.btn-ghost {
+  background: #fff;
+  color: #6b705c;
+  border: 1px solid #e7e1d7;
+}
+.btn-ghost:hover {
+  background: #ffe8d6;
+  border-color: #cb997e;
+}
+
+/* Muted text */
+.muted { color: #6b705c; opacity: .95; }
