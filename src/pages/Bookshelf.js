@@ -30,11 +30,10 @@ export default function Bookshelf({ readOnly = false, heading = "My Library" }) 
   const readingActivity = useMemo(() => {
     const allBooks = [...normalizedCR, ...normalizedTBR, ...normalizedFinished, ...normalizedDNF];
     const pagesRead = allBooks.reduce((sum, book) => sum + (Number(book.currentPage) || Number(book.pagesRead) || 0), 0);
-    const activeSessions = normalizedCR.length;
     const completed = normalizedFinished.length;
     const goal = 52;
     const completionPct = clamp(Math.round((completed / goal) * 100), 0, 100);
-    return { pagesRead, activeSessions, completed, completionPct };
+    return { pagesRead, completed, completionPct };
   }, [normalizedCR, normalizedTBR, normalizedFinished, normalizedDNF]);
 
   const openBookModal = (book) => {
@@ -114,6 +113,13 @@ const SECTION_ICONS = {
   "Paused / DNF": "🪶"
 };
 
+const TBR_WHISPERS = [
+  "waiting for a rainy day",
+  "future obsession",
+  "recommended by a friend",
+  "saved for candlelight"
+];
+
   const renderBookRail = (title, books, subtle = false) => (
     <section className="collection-section" key={title}>
       <div className="collection-head">
@@ -129,7 +135,7 @@ const SECTION_ICONS = {
       ) : (
         <div className={`book-rail ${subtle ? "book-rail--subtle" : ""}`}>
           {books.map((book, idx) => (
-            <div className="book-card-wrap" key={book.id || idx}>
+            <div className={`book-card-wrap ${title === "Want to Read" ? "book-card-wrap--dreamy" : ""}`} key={book.id || idx}>
               {/* Book cards are intentionally tilted and shadowed so they feel collectible and tactile. */}
               <img
                 className={`book-card-cover ${book.shelf === "dnf" ? "book-card-cover--dnf" : ""}`}
@@ -137,7 +143,13 @@ const SECTION_ICONS = {
                 alt={book.title || "Book cover"}
                 onClick={() => openBookModal(book)}
               />
-                          <div className="book-meta">{book.authors || "Unknown author"}</div>
+              <div className="book-meta">{book.authors || "Unknown author"}</div>
+              {title === "Want to Read" && (
+                <div className="book-whisper">{TBR_WHISPERS[idx % TBR_WHISPERS.length]}</div>
+              )}
+              {title === "Finished" && (
+                <div className="book-whisper">{book.endDate ? `finished ${new Date(book.endDate).toLocaleDateString()}` : "a treasured memory"}</div>
+              )}
               <div className="book-badges">
                 {!!book.favorite && <span className="book-badge">★ favorite</span>}
                 {!!book.notes && <span className="book-badge">✎ notes</span>}
@@ -168,6 +180,7 @@ const SECTION_ICONS = {
       </header>
 
       <section className="currently-reading-hero">
+        <div className="hero-ornaments" aria-hidden="true">✦ ☾ ❦</div>
         <div className="hero-cover">
           <img
             src={currentlyReadingHero?.cover || "https://via.placeholder.com/280x420?text=Pick+your+next+read"}
@@ -180,18 +193,19 @@ const SECTION_ICONS = {
           <p className="hero-meta">{currentlyReadingHero?.authors || "Start a book to unlock progress, notes, and streak rituals."}</p>
           <div className="hero-stats">
             <div><span>Progress</span><strong>{Number(currentlyReadingHero?.currentPage) || 0} pages</strong></div>
-            <div><span>Streak</span><strong>{Math.max(1, normalizedCR.length)} day rhythm</strong></div>
-            <div><span>Reflection</span><strong>{currentlyReadingHero ? "What do you predict next?" : "Add your first reading thought"}</strong></div>
+            <div><span>Streak</span><strong>{Math.max(1, normalizedCR.length)} day ritual</strong></div>
+            <div><span>Mood</span><strong>{currentlyReadingHero?.mood || "Rainy afternoon reverie"}</strong></div>
+            <div><span>Quote</span><strong>{currentlyReadingHero?.quote || "“A line worth underlining awaits.”"}</strong></div>
+            <div><span>Notebook</span><strong>{currentlyReadingHero?.notes ? "margin notes tucked in" : "leave a thought in the margins"}</strong></div>
           </div>
         </div>
       </section>
 
-      <section className="activity-grid">
-        <article><span>Pages read</span><strong>{readingActivity.pagesRead}</strong></article>
-        <article><span>Active books</span><strong>{readingActivity.activeSessions}</strong></article>
-        <article><span>Books finished</span><strong>{readingActivity.completed}</strong></article>
-        <article><span>Annual goal</span><strong>{readingActivity.completionPct}%</strong></article>
-      </section>
+      <aside className="journal-strip" aria-label="Reading journal details">
+        <p>Pages wandered: <strong>{readingActivity.pagesRead}</strong></p>
+        <p>Volumes cherished: <strong>{readingActivity.completed}</strong></p>
+        <p>Yearly chapter quest: <strong>{readingActivity.completionPct}%</strong></p>
+      </aside>
 
       <section className="collections-layout">
         {renderBookRail("Continue Reading", normalizedCR)}
