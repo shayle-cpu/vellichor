@@ -1,113 +1,138 @@
-@import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap');
-
-/* ---------- Page wrapper ---------- */
 .bookshelf-page {
-  padding: var(--space-5) 0 var(--space-7);
-  width: min(1100px, 100% - 1.5rem);
+  width: min(1180px, calc(100% - 2rem));
   margin: 0 auto;
-  font-family: var(--font-body);
-  color: var(--color-text);
+  padding: 2rem 0 3rem;
+  display: grid;
+  gap: 1.5rem;
 }
 
-/* ---------- Header: centered title + centered button ---------- */
-.library-hero { text-align: center; margin-bottom: 1.5rem; }
+.library-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  color: var(--color-text-soft);
+  font-family: var(--font-ui);
+}
 
 .library-title {
+  margin: 0.2rem 0 0;
   font-family: var(--font-display);
-  font-size: var(--text-hero);
-  color: var(--color-walnut);
-  margin: 0 0 0.5rem 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #3f322c;
 }
 
-.library-actions { display: flex; justify-content: center; }
-
-.add-book-button {
-  display: inline-block;
-  background-color: rgba(210,169,90,.38);
-  color: var(--color-walnut);
-  text-decoration: none;
+.currently-reading-hero {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) 1fr;
+  gap: 1.4rem;
+  padding: 1.25rem;
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(253,246,235,.95), rgba(237,226,205,.92));
+  border: 1px solid rgba(74, 58, 50, 0.18);
+  box-shadow: 0 12px 30px rgba(63, 50, 44, 0.12);
 }
-.add-book-button:hover { background-color: rgba(210,169,90,.55); }
-
-/* ---------- Shelf sections ---------- */
-.shelf-container { margin-bottom: 3rem; }
-
-.shelf-label {
-  display: block;           /* span full shelf width */
+.hero-cover img {
   width: 100%;
-  text-align: center;
-  font-size: var(--text-h3);
-  font-weight: bold;
-  background-color: rgba(255, 250, 241, 0.66);
-  color: var(--color-walnut);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  font-family: 'Playfair Display', serif;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(40, 29, 24, 0.3);
 }
+.hero-content h2 {
+  margin: 0.25rem 0;
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-family: var(--font-display);
+}
+.hero-meta { margin: 0; color: var(--color-text-soft); }
 
-/* The plank row where books sit */
-.shelf {
-  background-image: linear-gradient(170deg, rgba(87,68,58,.92), rgba(69,52,44,.95)), url('../assets/wood-shelf-texture.png');
-  background-size: cover;
-  height: 170px;
+.hero-stats {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.hero-stats div {
+  background: rgba(255, 251, 244, 0.85);
+  border: 1px solid rgba(74, 58, 50, 0.14);
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+.hero-stats span { display: block; font-size: 0.78rem; color: var(--color-text-soft); }
+.hero-stats strong { font-size: 0.95rem; }
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.activity-grid article {
+  border-radius: 12px;
+  padding: 0.9rem;
+  background: rgba(255, 248, 237, 0.84);
+  border: 1px solid rgba(74, 58, 50, 0.14);
+}
+.activity-grid span { display: block; font-size: 0.78rem; color: var(--color-text-soft); }
+.activity-grid strong { font-family: var(--font-display); font-size: 1.5rem; }
+
+.collections-layout { display: grid; gap: 1.4rem; }
+.collection-head {
   display: flex;
-  align-items: center;  /* centers covers vertically */
-  justify-content: flex-start;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.collection-head h3 { margin: 0; font-family: var(--font-display); font-size: 1.5rem; }
+.collection-head span { font-size: 0.83rem; color: var(--color-text-soft); font-family: var(--font-ui); }
+
+.book-rail {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(130px, 150px);
+  gap: 0.9rem;
   overflow-x: auto;
-  padding: 0 1rem;
-  border-radius: var(--radius-md);
-  gap: 0.5rem;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.18), var(--shadow-card);
-
-  /* click safety */
-  position: relative;
-  z-index: 10;
+  padding: 0.35rem 0.2rem 0.75rem;
 }
+.book-rail--subtle .book-card-cover { opacity: 0.94; }
 
-/* ---------- Book cards on shelf ---------- */
-.book {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0.5rem;
+.book-card-cover {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.22);
+  transition: transform 180ms ease, box-shadow 180ms ease;
   cursor: pointer;
-  transition: transform 0.2s ease;
 }
-.book:hover { transform: translateY(-4px); }
-
-.book-cover {
-  height: 150px;
-  width: auto;
-  display: block;
-  border-radius: 4px;
-  box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
-  background: #fff; /* for transparent images */
+.book-card-cover:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.28);
+}
+.book-card-cover--dnf { filter: grayscale(0.95) contrast(0.95); }
+.collection-empty {
+  margin-top: 0.6rem;
+  border: 1px dashed rgba(74, 58, 50, 0.25);
+  border-radius: 10px;
+  padding: 0.9rem;
+  color: var(--color-text-soft);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
+  .currently-reading-hero { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: 1fr; }
+  .activity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
   .bookshelf-page { width: calc(100% - 1rem); }
-  .shelf { height: 150px; padding: 0 .6rem; }
-  .book-cover { height: 128px; }
-}
-
-/* ---------- Empty shelf text ---------- */
-.empty-shelf {
-  color: #f4f4f4;
-  font-style: italic;
-  margin: auto 0;
-}
-
-/* ---------- DNF grayscale (works whether Book adds a class or we add a wrapper) ---------- */
-/* If your Book component adds class 'dnf' to the card or image */
-.book.dnf .book-cover,
-.book-cover.dnf {
-  filter: grayscale(100%) contrast(0.9) brightness(0.95);
-}
-
-/* For extra safety, if your Book sets a data attribute like data-shelf="dnf" */
-.book[data-shelf="dnf"] .book-cover,
-.book-cover[data-shelf="dnf"] {
-  filter: grayscale(100%) contrast(0.9) brightness(0.95);
+  .library-topbar { align-items: flex-start; flex-direction: column; }
+  .activity-grid { grid-template-columns: 1fr 1fr; }
+  .book-rail { grid-auto-columns: minmax(110px, 125px); }
 }
