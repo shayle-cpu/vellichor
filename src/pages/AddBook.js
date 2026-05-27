@@ -4,6 +4,24 @@ import { useBooks } from "../context/BookContext";
 import "../styles/AddBook.css";
 
 const ensureHttps = (url) => (url ? url.replace(/^http:/, "https:") : url);
+const GOOGLE_BOOKS_KEY =
+  process.env.REACT_APP_GOOGLE_BOOKS_API_KEY ||
+  (typeof import.meta !== "undefined"
+    ? import.meta.env?.VITE_GOOGLE_BOOKS_API_KEY
+    : undefined);
+
+const buildGoogleBooksUrl = (search) => {
+  const params = new URLSearchParams({
+    q: search,
+    maxResults: "12",
+  });
+
+  if (GOOGLE_BOOKS_KEY) {
+    params.set("key", GOOGLE_BOOKS_KEY);
+  }
+
+  return `https://www.googleapis.com/books/v1/volumes?${params.toString()}`;
+};
 
 export default function AddBook() {
   const navigate = useNavigate();
@@ -12,6 +30,7 @@ export default function AddBook() {
   const [shelf, setShelf] = useState("tbr");
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [searchError, setSearchError] = useState("");
 
   // Fetch books from Google Books API
   const fetchBooks = async (search) => {
@@ -21,12 +40,15 @@ export default function AddBook() {
     }
 
     try {
-      const res = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
-          search
-        )}&maxResults=12`
-      );
+      setSearchError("");
+      const res = await fetch(buildGoogleBooksUrl(search));
       const data = await res.json();
+
+      if (!res.ok) {
+        setSuggestions([]);
+        setSearchError(data?.error?.message || "Book search failed.");
+        return;
+      }
 
       if (data.items) {
         const normalized = data.items.map((item) => {
@@ -52,6 +74,7 @@ export default function AddBook() {
     } catch (err) {
       console.error("Error fetching books:", err);
       setSuggestions([]);
+      setSearchError("Unable to reach Google Books. Please try again.");
     }
   };
 
@@ -118,6 +141,7 @@ export default function AddBook() {
           </li>
         ))}
       </ul>
+      {searchError && <p className="search-error">{searchError}</p>}
     </div>
   );
 }
