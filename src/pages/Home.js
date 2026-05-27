@@ -11,6 +11,7 @@ import iconSeries from "../assets/icons/series.png";
 
 import { useBooks } from "../context/BookContext";
 import { useReadingLog } from "../context/ReadingLogContext";
+import { PageShell } from "../components/design-system/PageShell";
 
 /* ---------------- helpers for IDs / covers ---------------- */
 const idOf = (b = {}) => b.id || b.googleId || b.isbn || b._id || String(b.title || Math.random());
@@ -118,10 +119,10 @@ export default function Home() {
   ];
 
   return (
-    <div className="home">
+    <PageShell className="home">
       <header className="home-header">
-        <h1 className="home-brand">Vellichor</h1>
-        <p className="home-tag">Your personal cozy book nook.</p>
+        <h1 className="home-brand v-heading-display">Vellichor</h1>
+        <p className="home-tag v-copy-soft">A warm literary sanctuary to return to nightly.</p>
 
         <div className="streak-pill" aria-label={`Reading streak ${streak} days`}>
           <span className="streak-dot" />
@@ -130,6 +131,7 @@ export default function Home() {
       </header>
 
       {/* Icon grid */}
+      <section className="v-card v-card--hero ritual-shell">
       <div className="icon-grid">
         {tiles.map((t) => (
           <Link key={t.to} to={t.to} className="icon-tile" aria-label={t.label}>
@@ -139,11 +141,12 @@ export default function Home() {
           </Link>
         ))}
       </div>
+      </section>
 
       {/* Panels */}
       <section className="home-section">
         <h2 className="home-sec-title">Currently Reading</h2>
-        <div className="panel">
+        <div className="panel v-card v-card--soft">
           {currentlyReading.length === 0 ? (
             <div className="home-empty">Nothing here yet — add something in your Library.</div>
           ) : (
@@ -164,7 +167,7 @@ export default function Home() {
 
       <section className="home-section">
         <h2 className="home-sec-title">Recently Finished</h2>
-        <div className="panel">
+        <div className="panel v-card v-card--soft">
           {finished.length === 0 ? (
             <div className="home-empty">No finished books yet.</div>
           ) : (
@@ -193,7 +196,7 @@ export default function Home() {
 
       <section className="home-section">
         <h2 className="home-sec-title">Next From Your TBR</h2>
-        <div className="panel">
+        <div className="panel v-card v-card--soft v-card--notebook">
           {tbr.length === 0 ? (
             <div className="home-empty">Your TBR is empty — add some books!</div>
           ) : (
@@ -211,6 +214,6 @@ export default function Home() {
           )}
         </div>
       </section>
-    </div>
+    </PageShell>
   );
 }

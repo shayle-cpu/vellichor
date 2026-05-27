@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=Source+Serif+4:wght@400;500;600;700&display=swap');
+
+:root {
+  /* color system */
+  --color-ink: #2b2521;
+  --color-walnut: #4a3a32;
+  --color-aged-paper: #f1e7d3;
+  --color-rose: #c78e8b;
+  --color-moss: #6f7a60;
+  --color-candle: #d2a95a;
+  --color-rain: #5e6c7a;
+  --color-cream: #faf3e6;
+
+  --color-bg: var(--color-aged-paper);
+  --color-text: var(--color-ink);
+  --color-text-soft: rgba(43, 37, 33, 0.78);
+  --color-border: rgba(74, 58, 50, 0.24);
+
+  /* typography system */
+  --font-display: 'Cormorant Garamond', 'Playfair Display', serif;
+  --font-body: 'Source Serif 4', Georgia, serif;
+  --font-ui: 'Inter', sans-serif;
+
+  --text-hero: clamp(2rem, 7vw, 3.2rem);
+  --text-title: clamp(1.45rem, 4vw, 2.1rem);
+  --text-h3: clamp(1.15rem, 3vw, 1.4rem);
+  --text-body: 1rem;
+  --text-small: 0.88rem;
+
+  /* spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.75rem;
+
+  /* radius */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+
+  /* elevation */
+  --shadow-ambient: 0 10px 28px rgba(74, 58, 50, 0.11);
+  --shadow-card: 0 5px 18px rgba(74, 58, 50, 0.09);
+  --shadow-focus: 0 0 0 3px rgba(210, 169, 90, 0.3);
+
+  /* motion */
+  --motion-fast: 160ms ease-out;
+  --motion-base: 200ms ease-out;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: radial-gradient(circle at top, #fff8ed 0%, var(--color-bg) 40%, #f4e9d2 100%);
+  line-height: 1.55;
+}
+
+.v-page-shell {
+  width: min(1100px, 100% - 2rem);
+  margin: 0 auto;
+  padding: var(--space-6) 0 var(--space-7);
+}
+
+.v-stack { display: grid; gap: var(--space-5); }
+.v-stack-tight { gap: var(--space-3); }
+.v-cluster { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+
+.v-card {
+  background: linear-gradient(170deg, rgba(255,249,239,.92), rgba(241,231,211,.92));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+.v-card--hero { padding: clamp(1rem, 4vw, 2rem); border-radius: var(--radius-lg); box-shadow: var(--shadow-ambient); }
+.v-card--soft { padding: var(--space-4); }
+.v-card--notebook { background: repeating-linear-gradient(to bottom, rgba(255,250,241,.98), rgba(255,250,241,.98) 28px, rgba(199,142,139,.16) 29px); }
+
+.v-heading-display { font-family: var(--font-display); font-size: var(--text-hero); margin: 0; letter-spacing: .02em; }
+.v-heading-title { font-family: var(--font-display); font-size: var(--text-title); margin: 0; }
+.v-copy-soft { color: var(--color-text-soft); margin: 0; }
+
+.v-btn, .add-book-button {
+  border-radius: 999px;
+  border: 1px solid rgba(74, 58, 50, 0.35);
+  padding: .65rem 1rem;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  transition: transform var(--motion-fast), box-shadow var(--motion-base), background var(--motion-base);
+}
+.v-btn:hover, .add-book-button:hover { transform: translateY(-1px); box-shadow: var(--shadow-card); }
+.v-btn-primary { background: var(--color-candle); color: #2f271f; }
+.v-btn-secondary { background: rgba(199,142,139,.24); color: var(--color-walnut); }
+
+input, select, textarea {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 251, 243, 0.9);
+  color: var(--color-text);
+  padding: .6rem .8rem;
+  font-family: var(--font-ui);
+}
+input:focus, select:focus, textarea:focus, .v-btn:focus-visible, a:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+@media (max-width: 700px) {
+  .v-page-shell { width: min(1100px, 100% - 1rem); padding-top: var(--space-5); }
+}
