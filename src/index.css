@@ -5,127 +5,73 @@ body {
   padding: 0;
   font-family: var(--font-body);
   background: var(--color-bg);
-  background-size: cover;
-  background-repeat: repeat;
 }
 
-/* Sidebar container */
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
-  width: 250px;
-  background-color: #f8efdd;
-  border-right: 1px solid var(--color-border);
-  box-shadow: var(--shadow-card);
+  width: 280px;
+  background: linear-gradient(180deg, #fbf1de, #f3e1bf);
+  border-right: 2px solid rgba(77, 58, 41, .35);
+  box-shadow: 0 16px 28px rgba(45, 30, 22, .2);
   padding: 2rem 1rem;
-  font-family: var(--font-body);
   color: var(--color-moss);
-  transform: translateX(-100%); /* fully offscreen */
+  transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: 1000;
   overflow-y: auto;
-  box-sizing: border-box; /* include borders in width */
+  box-sizing: border-box;
 }
 
-/* Sidebar visible */
-.sidebar.open {
-  transform: translateX(0);
+.sidebar::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px dashed rgba(95, 114, 86, .35);
+  border-radius: 18px;
+  pointer-events: none;
 }
 
-/* Toggle hamburger button */
+.sidebar.open { transform: translateX(0); }
+
 .sidebar-toggle {
   position: fixed;
-  top: 1rem;
-  left: 1rem;
-  width: 35px;
-  height: 30px;
+  top: .8rem;
+  left: .8rem;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
-  z-index: 1100; /* above sidebar */
-  background: transparent;
-  border: none;
+  z-index: 1100;
+  background: radial-gradient(circle at 30% 30%, #fff4dd, #e2c89c);
+  border: 1.5px solid rgba(77,58,41,.5);
+  border-radius: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 0;
+  justify-content: center;
+  gap: 4px;
+  padding: 7px;
 }
 
-/* Hamburger bars */
-.sidebar-toggle .bar {
-  height: 4px;
-  background-color: var(--color-rose);
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
+.sidebar-toggle .bar { height: 3px; background-color: #7d5f4a; border-radius: 2px; transition: all 0.3s ease; }
+.sidebar-toggle.open .bar:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
+.sidebar-toggle.open .bar:nth-child(2) { opacity: 0; }
+.sidebar-toggle.open .bar:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
 
-/* Animate toggle to X when open */
-.sidebar-toggle.open .bar:nth-child(1) {
-  transform: rotate(45deg) translate(6px, 6px);
-}
-.sidebar-toggle.open .bar:nth-child(2) {
-  opacity: 0;
-}
-.sidebar-toggle.open .bar:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -7px);
-}
-
-/* Sidebar nav links */
 .sidebar a {
   display: block;
-  padding: 0.75rem 1rem;
-  color: var(--color-moss);
-  font-weight: 600;
-  font-family: var(--font-ui);
+  padding: 0.7rem 1rem;
+  color: #4f6548;
+  font-weight: 700;
+  font-family: var(--font-display);
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 999px;
   margin-bottom: 0.5rem;
-  transition: background-color 0.3s ease;
 }
+.sidebar a:hover { background-color: rgba(166, 186, 150, 0.25); color: var(--color-walnut); }
 
-.sidebar a:hover {
-  background-color: rgba(199, 142, 139, 0.22);
-  color: var(--color-walnut);
-}
+.sidebar-logo { text-align: center; margin-bottom: 1.5rem; }
+.sidebar-logo img { max-width: 106px; width: 106px; height: auto; border-radius: 12px; opacity: .96; }
 
-/* Push main content to right when sidebar open */
-body.sidebar-open #main-content {
-  margin-left: 250px;
-  transition: margin-left 0.3s ease;
-}
-
-/* Responsive adjustments */
-@media (max-width: 720px) {
-  .sidebar {
-    width: 200px;
-    transform: translateX(-100%);
-  }
-
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  body.sidebar-open #main-content {
-    margin-left: 200px;
-  }
-}
-/* Logo styling inside sidebar */
-.sidebar-logo {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.sidebar-logo img {
-  max-width: 100px;  /* smaller size */
-  width: 100px;
-  height: auto;
-  border-radius: 2px; /* slightly rounded */
-  opacity: 0.95;      /* softer look */
-}
-/* Kill interactions from hidden overlays */
-.sidebar:not(.open),
-.sidebar-backdrop,
-.nav-overlay {
-  pointer-events: none !important;
-  z-index: 0 !important;
-}
+.sidebar:not(.open), .sidebar-backdrop, .nav-overlay { pointer-events: none !important; z-index: 0 !important; }
