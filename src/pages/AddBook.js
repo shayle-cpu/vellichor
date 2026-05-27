@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBooks } from "../context/BookContext";
 import "../styles/AddBook.css";
@@ -31,22 +31,55 @@ export default function AddBook() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [searchError, setSearchError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const cacheRef = useRef(new Map());
+  const inFlightRef = useRef(new Map());
+  const activeRequestRef = useRef("");
 
   // Fetch books from Google Books API
   const fetchBooks = async (search) => {
-    if (!search?.trim()) {
+    const normalizedQuery = search?.trim();
+
+    if (!normalizedQuery || normalizedQuery.length < 3) {
       setSuggestions([]);
+      setSearchError("");
+      setIsLoading(false);
+      return;
+    }
+
+    if (cacheRef.current.has(normalizedQuery)) {
+      setSuggestions(cacheRef.current.get(normalizedQuery));
+      setSearchError("");
+      setIsLoading(false);
+      return;
+    }
+
+    if (inFlightRef.current.has(normalizedQuery)) {
+      setIsLoading(true);
       return;
     }
 
     try {
       setSearchError("");
-      const res = await fetch(buildGoogleBooksUrl(search));
+      setIsLoading(true);
+      activeRequestRef.current = normalizedQuery;
+
+      const request = fetch(buildGoogleBooksUrl(normalizedQuery));
+      inFlightRef.current.set(normalizedQuery, request);
+      const res = await request;
       const data = await res.json();
+      inFlightRef.current.delete(normalizedQuery);
+
+      if (activeRequestRef.current !== normalizedQuery) {
+        return;
+      }
 
       if (!res.ok) {
         setSuggestions([]);
-        setSearchError(data?.error?.message || "Book search failed.");
+        setSearchError(
+          data?.error?.message ||
+            "Book search is temporarily unavailable. Please try again in a moment."
+        );
         return;
       }
 
@@ -67,6 +100,7 @@ export default function AddBook() {
             pageCount: Number(v.pageCount) || 0, // renamed here
           };
         });
+        cacheRef.current.set(normalizedQuery, normalized);
         setSuggestions(normalized);
       } else {
         setSuggestions([]);
@@ -74,9 +108,22 @@ export default function AddBook() {
     } catch (err) {
       console.error("Error fetching books:", err);
       setSuggestions([]);
-      setSearchError("Unable to reach Google Books. Please try again.");
+      setSearchError("Unable to reach Google Books. Please try again shortly.");
+      inFlightRef.current.delete(normalizedQuery);
+    } finally {
+      if (activeRequestRef.current === normalizedQuery) {
+        setIsLoading(false);
+      }
     }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchBooks(query);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [query]);
 
   // When user selects a book, save it to shelf
   const handleSelectBook = (book) => {
@@ -111,13 +158,17 @@ export default function AddBook() {
           type="text"
           placeholder="Search by title..."
           value={query}
-          onChange={(e) => {
-            const val = e.target.value;
-            setQuery(val);
-            fetchBooks(val);
-          }}
+          onChange={(e) => setQuery(e.target.value)}
         />
       </div>
+
+      {query.trim().length > 0 && query.trim().length < 3 && (
+        <p className="search-error">Type at least 3 characters to search.</p>
+      )}
+      {isLoading && <p>Searching books...</p>}
+      {!isLoading && !searchError && query.trim().length >= 3 && suggestions.length === 0 && (
+        <p>No books found for "{query.trim()}".</p>
+      )}
 
       <ul className="suggestions-list">
         {suggestions.map((book) => (
