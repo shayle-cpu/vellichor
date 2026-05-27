@@ -100,24 +100,50 @@ export default function Bookshelf({ readOnly = false, heading = "My Library" }) 
     setModalBook((m) => ({ ...(m || {}), ...partial, shelf: shelfKey }));
   };
 
+  const EMPTY_COPY = {
+  "Continue Reading": ["Waiting for your next obsession", "A fresh chapter will glow here tonight."],
+  "Want to Read": ["This shelf smells like possibility", "A future favorite belongs here."],
+  Finished: ["Every finished story leaves a little stardust", "Your completed adventures will gather here."],
+  "Paused / DNF": ["Some stories need a different season", "Bookmarks wait patiently for your return."]
+};
+
+const SECTION_ICONS = {
+  "Continue Reading": "🕯️",
+  "Want to Read": "🌿",
+  Finished: "📜",
+  "Paused / DNF": "🪶"
+};
+
   const renderBookRail = (title, books, subtle = false) => (
     <section className="collection-section" key={title}>
       <div className="collection-head">
-        <h3>{title}</h3>
+        <h3><span aria-hidden="true">{SECTION_ICONS[title] || "✦"}</span>{title}</h3>
         <span>{books.length} books</span>
       </div>
       {books.length === 0 ? (
-        <div className="collection-empty">Nothing here yet — add a title to shape this collection.</div>
+        <div className="collection-empty">
+          <div className="empty-line">{EMPTY_COPY[title]?.[0] || "A future favorite belongs here"}</div>
+          <div className="empty-line">{EMPTY_COPY[title]?.[1] || "A little literary magic is on the way."}</div>
+          <div className="empty-trinkets" aria-hidden="true">✧ pressed flower · tiny star map · velvet bookmark</div>
+        </div>
       ) : (
         <div className={`book-rail ${subtle ? "book-rail--subtle" : ""}`}>
           {books.map((book, idx) => (
             <div className="book-card-wrap" key={book.id || idx}>
+              {/* Book cards are intentionally tilted and shadowed so they feel collectible and tactile. */}
               <img
                 className={`book-card-cover ${book.shelf === "dnf" ? "book-card-cover--dnf" : ""}`}
                 src={book.cover || "https://via.placeholder.com/180x270?text=No+Cover"}
                 alt={book.title || "Book cover"}
                 onClick={() => openBookModal(book)}
               />
+                          <div className="book-meta">{book.authors || "Unknown author"}</div>
+              <div className="book-badges">
+                {!!book.favorite && <span className="book-badge">★ favorite</span>}
+                {!!book.notes && <span className="book-badge">✎ notes</span>}
+                {!!book.quote && <span className="book-badge">❝ quote</span>}
+                {!!book.prediction && <span className="book-badge">🔮 prediction</span>}
+              </div>
             </div>
           ))}
         </div>
@@ -127,6 +153,8 @@ export default function Bookshelf({ readOnly = false, heading = "My Library" }) 
 
   return (
     <div className="bookshelf-page">
+      {/* Atmospheric dust layer keeps empty spaces alive without adding UI clutter. */}
+      <div className="atmospheric-dust" aria-hidden="true" />
       <header className="library-topbar">
         <div>
           <p className="eyebrow">Reading sanctuary</p>
