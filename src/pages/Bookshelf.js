@@ -1,34 +1,41 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import Shelf from "../components/Shelf";
 import BookModal from "../components/BookModal";
 import { useBooks } from "../context/BookContext";
 import "../styles/Bookshelf.css";
-
-// ✅ NEW: log finished books for achievements like First Finish / Double Feature
 import { logFinishedBook } from "../utils/history";
 
-// Ensure a consistent cover field
 const normalizeBook = (b = {}) => ({
   ...b,
   cover: b.cover || b.coverUrl || b.coverURL || "",
 });
 
-export default function Bookshelf({
-  readOnly = false,
-  heading = "My Library",
-}) {
+const clamp = (n, min, max) => Math.min(Math.max(n, min), max);
+
+export default function Bookshelf({ readOnly = false, heading = "My Library" }) {
   const { shelves = {}, upsertBook, moveBookShelf, removeBook } = useBooks();
 
-  const {
-    currentlyReading = [],
-    tbr = [],
-    finished = [],
-    dnf = [],
-  } = shelves || {};
+  const { currentlyReading = [], tbr = [], finished = [], dnf = [] } = shelves || {};
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalBook, setModalBook] = useState(null);
+
+  const normalizedCR = currentlyReading.map(normalizeBook);
+  const normalizedTBR = tbr.map(normalizeBook);
+  const normalizedFinished = finished.map(normalizeBook);
+  const normalizedDNF = dnf.map(normalizeBook);
+
+  const currentlyReadingHero = normalizedCR[0] || null;
+
+  const readingActivity = useMemo(() => {
+    const allBooks = [...normalizedCR, ...normalizedTBR, ...normalizedFinished, ...normalizedDNF];
+    const pagesRead = allBooks.reduce((sum, book) => sum + (Number(book.currentPage) || Number(book.pagesRead) || 0), 0);
+    const activeSessions = normalizedCR.length;
+    const completed = normalizedFinished.length;
+    const goal = 52;
+    const completionPct = clamp(Math.round((completed / goal) * 100), 0, 100);
+    return { pagesRead, activeSessions, completed, completionPct };
+  }, [normalizedCR, normalizedTBR, normalizedFinished, normalizedDNF]);
 
   const openBookModal = (book) => {
     setModalBook(normalizeBook(book));
@@ -40,7 +47,6 @@ export default function Bookshelf({
     setModalBook(null);
   };
 
-  // Remove from library (inline X or from modal)
   const handleRemoveBook = (bookOrId) => {
     if (readOnly) return;
     const id = typeof bookOrId === "string" ? bookOrId : bookOrId?.id;
@@ -49,7 +55,6 @@ export default function Bookshelf({
     if (modalBook?.id === id) closeBookModal();
   };
 
-  // Find which shelf a book is on right now
   const findShelfKey = (id) => {
     if (currentlyReading.some((b) => b.id === id)) return "currentlyReading";
     if (tbr.some((b) => b.id === id)) return "tbr";
@@ -58,17 +63,13 @@ export default function Bookshelf({
     return "tbr";
   };
 
-  // Move between shelves from inside the modal
   const handleMoveToShelf = (targetShelf) => {
     if (readOnly || !modalBook?.id) return;
 
-    const key = ["finished", "currentlyReading", "tbr", "dnf"].includes(targetShelf)
-      ? targetShelf
-      : "tbr";
+    const key = ["finished", "currentlyReading", "tbr", "dnf"].includes(targetShelf) ? targetShelf : "tbr";
 
     moveBookShelf(modalBook.id, key);
 
-    // ✅ If moved to Finished, record a finish event for achievement logic
     if (key === "finished") {
       logFinishedBook({
         bookId: modalBook.id,
@@ -82,7 +83,6 @@ export default function Bookshelf({
     closeBookModal();
   };
 
-  // Update fields (favorite, pages, rating, etc.) and keep on its shelf
   const handleUpdateBook = (partial) => {
     if (readOnly || !modalBook?.id) return;
 
@@ -96,58 +96,82 @@ export default function Bookshelf({
         ? finished.find((b) => b.id === modalBook.id)
         : dnf.find((b) => b.id === modalBook.id)) || {};
 
-    // Persist to store
-    upsertBook({
-      ...current,
-      ...modalBook,
-      ...partial,
-      id: modalBook.id,
-      shelf: shelfKey,
-    });
-
-    // Keep modal UI in sync
+    upsertBook({ ...current, ...modalBook, ...partial, id: modalBook.id, shelf: shelfKey });
     setModalBook((m) => ({ ...(m || {}), ...partial, shelf: shelfKey }));
   };
 
+  const renderBookRail = (title, books, subtle = false) => (
+    <section className="collection-section" key={title}>
+      <div className="collection-head">
+        <h3>{title}</h3>
+        <span>{books.length} books</span>
+      </div>
+      {books.length === 0 ? (
+        <div className="collection-empty">Nothing here yet — add a title to shape this collection.</div>
+      ) : (
+        <div className={`book-rail ${subtle ? "book-rail--subtle" : ""}`}>
+          {books.map((book, idx) => (
+            <div className="book-card-wrap" key={book.id || idx}>
+              <img
+                className={`book-card-cover ${book.shelf === "dnf" ? "book-card-cover--dnf" : ""}`}
+                src={book.cover || "https://via.placeholder.com/180x270?text=No+Cover"}
+                alt={book.title || "Book cover"}
+                onClick={() => openBookModal(book)}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+
   return (
     <div className="bookshelf-page">
-      {/* Header */}
-      <div className="library-hero">
-        <h1 className="library-title">{heading}</h1>
+      <header className="library-topbar">
+        <div>
+          <p className="eyebrow">Reading sanctuary</p>
+          <h1 className="library-title">{heading}</h1>
+        </div>
         {!readOnly && (
           <div className="library-actions">
             <Link to="/add-book" className="add-book-button">+ Add Book</Link>
           </div>
         )}
-      </div>
+      </header>
 
-      {/* Shelves — order: Currently Reading → TBR → Finished → DNF */}
-      <Shelf
-        title="Currently Reading"
-        books={currentlyReading.map(normalizeBook)}
-        onBookClick={openBookModal}
-        {...(!readOnly && { onRemoveBook: handleRemoveBook })}
-      />
-      <Shelf
-        title="To Be Read"
-        books={tbr.map(normalizeBook)}
-        onBookClick={openBookModal}
-        {...(!readOnly && { onRemoveBook: handleRemoveBook })}
-      />
-      <Shelf
-        title="Finished"
-        books={finished.map(normalizeBook)}
-        onBookClick={openBookModal}
-        {...(!readOnly && { onRemoveBook: handleRemoveBook })}
-      />
-      <Shelf
-        title="DNF"
-        books={dnf.map(normalizeBook)}
-        onBookClick={openBookModal}
-        {...(!readOnly && { onRemoveBook: handleRemoveBook })}
-      />
+      <section className="currently-reading-hero">
+        <div className="hero-cover">
+          <img
+            src={currentlyReadingHero?.cover || "https://via.placeholder.com/280x420?text=Pick+your+next+read"}
+            alt={currentlyReadingHero?.title || "Currently reading"}
+          />
+        </div>
+        <div className="hero-content">
+          <p className="eyebrow">Currently reading</p>
+          <h2>{currentlyReadingHero?.title || "Choose your next immersive read"}</h2>
+          <p className="hero-meta">{currentlyReadingHero?.authors || "Start a book to unlock progress, notes, and streak rituals."}</p>
+          <div className="hero-stats">
+            <div><span>Progress</span><strong>{Number(currentlyReadingHero?.currentPage) || 0} pages</strong></div>
+            <div><span>Streak</span><strong>{Math.max(1, normalizedCR.length)} day rhythm</strong></div>
+            <div><span>Reflection</span><strong>{currentlyReadingHero ? "What do you predict next?" : "Add your first reading thought"}</strong></div>
+          </div>
+        </div>
+      </section>
 
-      {/* Modal (read-only if prop set) */}
+      <section className="activity-grid">
+        <article><span>Pages read</span><strong>{readingActivity.pagesRead}</strong></article>
+        <article><span>Active books</span><strong>{readingActivity.activeSessions}</strong></article>
+        <article><span>Books finished</span><strong>{readingActivity.completed}</strong></article>
+        <article><span>Annual goal</span><strong>{readingActivity.completionPct}%</strong></article>
+      </section>
+
+      <section className="collections-layout">
+        {renderBookRail("Continue Reading", normalizedCR)}
+        {renderBookRail("Want to Read", normalizedTBR, true)}
+        {renderBookRail("Finished", normalizedFinished)}
+        {renderBookRail("Paused / DNF", normalizedDNF, true)}
+      </section>
+
       <BookModal
         open={modalOpen}
         onClose={closeBookModal}
