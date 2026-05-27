@@ -120,8 +120,8 @@ const TBR_WHISPERS = [
   "saved for candlelight"
 ];
 
-  const renderBookRail = (title, books, subtle = false) => (
-    <section className="collection-section" key={title}>
+  const renderBookRail = (title, books, sectionClass = "", subtle = false) => (
+    <section className={`collection-section ${sectionClass}`} key={title}>
       <div className="collection-head">
         <h3><span aria-hidden="true">{SECTION_ICONS[title] || "✦"}</span>{title}</h3>
         <span>{books.length} books</span>
@@ -167,6 +167,11 @@ const TBR_WHISPERS = [
     <div className="bookshelf-page">
       {/* Atmospheric dust layer keeps empty spaces alive without adding UI clutter. */}
       <div className="atmospheric-dust" aria-hidden="true" />
+      <div className="library-vines" aria-hidden="true">
+        <span className="vine vine-1">❦ ❁</span>
+        <span className="vine vine-2">☾ ✦</span>
+        <span className="vine vine-3">❁ ❃</span>
+      </div>
       <header className="library-topbar">
         <div>
           <p className="eyebrow">Reading sanctuary</p>
@@ -208,10 +213,10 @@ const TBR_WHISPERS = [
       </aside>
 
       <section className="collections-layout">
-        {renderBookRail("Continue Reading", normalizedCR)}
-        {renderBookRail("Want to Read", normalizedTBR, true)}
-        {renderBookRail("Finished", normalizedFinished)}
-        {renderBookRail("Paused / DNF", normalizedDNF, true)}
+        {renderBookRail("Continue Reading", normalizedCR, "section-reading")}
+        {renderBookRail("Want to Read", normalizedTBR, "section-want", true)}
+        {renderBookRail("Finished", normalizedFinished, "section-finished")}
+        {renderBookRail("Paused / DNF", normalizedDNF, "section-paused", true)}
       </section>
 
       <BookModal
