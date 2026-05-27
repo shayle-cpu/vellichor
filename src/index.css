@@ -1,8 +1,10 @@
+@import "./styles/design-system.css";
+
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Playfair Display', serif;
-  background: var(--pt-cream);
+  font-family: var(--font-body);
+  background: var(--color-bg);
   background-size: cover;
   background-repeat: repeat;
 }
@@ -14,12 +16,12 @@ body {
   left: 0;
   height: 100vh;
   width: 250px;
-  background-color: #fffaf0; /* soft paper peach */
-  border-right: 2px solid #b7b7a4; /* muted sage border */
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  background-color: #f8efdd;
+  border-right: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
   padding: 2rem 1rem;
-  font-family: 'Playfair Display', serif;
-  color: #6b705c; /* earthy green text */
+  font-family: var(--font-body);
+  color: var(--color-moss);
   transform: translateX(-100%); /* fully offscreen */
   transition: transform 0.3s ease;
   z-index: 1000;
@@ -52,7 +54,7 @@ body {
 /* Hamburger bars */
 .sidebar-toggle .bar {
   height: 4px;
-  background-color: #cb997e; /* warm terracotta */
+  background-color: var(--color-rose);
   border-radius: 2px;
   transition: all 0.3s ease;
 }
@@ -72,9 +74,9 @@ body {
 .sidebar a {
   display: block;
   padding: 0.75rem 1rem;
-  color: #6b705c;
+  color: var(--color-moss);
   font-weight: 600;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-ui);
   text-decoration: none;
   border-radius: 8px;
   margin-bottom: 0.5rem;
@@ -82,8 +84,8 @@ body {
 }
 
 .sidebar a:hover {
-  background-color: #ffe8d6; /* soft peach hover */
-  color: #cb997e; /* terracotta hover */
+  background-color: rgba(199, 142, 139, 0.22);
+  color: var(--color-walnut);
 }
 
 /* Push main content to right when sidebar open */
